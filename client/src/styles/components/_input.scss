@@ -1,0 +1,74 @@
+.custom__input__wrapper {
+    position: relative;
+    display: flex;  
+    width: 100%;
+
+    &:not(:last-of-type) {
+        margin-bottom: 24px;
+    }
+
+    img {
+        position: absolute;
+        right: 16px;
+        top: 25%;
+        transition: all .3s;
+    }
+
+    .randomize__icon:hover, .password__icon:hover {
+        filter: brightness(0%);
+    }
+}
+
+.custom__input {
+    font-size: var(--default-font-size);
+    padding: 12px 40px 12px 8px;
+    border-radius: 5px;
+    border: 1px solid var(--secondary);
+    width: 100%;
+    background-color: #fff;
+
+    &.default, &.password {
+        border: 1px solid var(--secondary);
+    }   
+
+    &::placeholder {
+        color: var(--secondary);
+    }
+
+    &:focus {
+        border: 1px solid var(--peach);
+    }
+
+    &.alert {
+        border: 1px solid var(--red);
+    }
+
+    &.correct {
+        border: 1px solid var(--green);
+    }
+}
+
+.alert__message {
+    color: #fff;
+    background-color: black;
+    opacity: 40%;
+    font-size: var(--mini-font-size);
+    position: absolute;
+    top: 15%;
+    right: 2%;
+    transform: translateX(100%);
+    border-radius: 5px;
+    padding: 5px 8px;
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        bottom: -15%;
+        left: 0;
+        border-bottom: 10px solid black;
+        border-right: 10px solid transparent;
+        transform: rotate(95deg)
+    }
+}

@@ -1,0 +1,23 @@
+.formbtn{
+    border-radius: 8px;
+padding: 13px 89px;
+width: 100%; 
+height: 48px;
+box-shadow: 2px 4px 4px 0 rgba(0, 0, 0, 0.1);
+background: var(--dark);
+border: none;
+color: var(--cream);
+
+font-weight: 500;
+font-size: 18px;
+text-align: center;
+
+&--disable{
+    background-color: var(--secondary);
+}
+
+&:hover{
+    box-shadow: var(--box-shadow-btn);
+}
+}
+

@@ -1,0 +1,32 @@
+.btn__container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // padding: 13px 89px;
+width: 416px;
+border-radius: 8px;
+background: var(--dark);
+cursor: pointer;
+
+&:hover{
+    box-shadow: var(--box-shadow-btn);
+    width: 420px;
+}
+}
+.btn{
+    border-radius: 8px;
+padding: 13px 89px;
+// width: 100%; 
+// height: 48px;
+
+background: var(--dark);
+border: none;
+color: var(--cream);
+box-shadow: none;
+
+font-weight: 500;
+font-size: 18px;
+text-align: center;
+
+
+}
