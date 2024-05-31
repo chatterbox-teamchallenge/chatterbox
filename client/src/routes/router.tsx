@@ -1,0 +1,20 @@
+// import { createBrowserRouter } from "react-router-dom";
+// import Start from "../pages/Start/Start";
+// import Login from "../pages/Start/Login";
+
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <Start />,
+//   },
+//   {
+//     path: "register",
+//     element: <Login type="register"/>,
+//   },
+//   {
+//     path: "login",
+//     element: <Login type="login"/>,
+//   },
+// ]);
+
+// export default router;
