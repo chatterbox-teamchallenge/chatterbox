@@ -42,9 +42,9 @@ export default function Form({ type, isConfirmed }: FormProps) {
     .object({
       name: z
         .string()
-        .regex(/^[a-zA-Z0-9-_]+$/, {
+        .regex(/^[A-Za-z0-9_-]*$/, {
           message:
-            "Field must contain only English letters, numbers, hyphens, or underscores",
+            "Field must be empty or contain only English letters, numbers, hyphens, or underscores",
         })
         .max(20)
         .optional(),
@@ -67,6 +67,7 @@ export default function Form({ type, isConfirmed }: FormProps) {
 
   const {
     register,
+    getValues,
     handleSubmit,
     trigger,
     formState: { errors, isValid },
@@ -115,10 +116,11 @@ export default function Form({ type, isConfirmed }: FormProps) {
     fieldValue: string | undefined
   ) => {
     await trigger(fieldName);
-    console.log(fieldName, isFieldFilled(fieldValue))
-    if (fieldName === 'name' && !isFieldFilled(fieldValue))
-{    console.log(fieldName) ; return 'correct';}
-    else if (isFieldFilled(fieldValue) && errors[fieldName] === undefined)
+    console.log(fieldName, fieldValue, isFieldFilled(fieldValue));
+    if (fieldName === "name" && !isFieldFilled(fieldValue)) {
+      console.log(fieldName);
+      return "correct";
+    } else if (isFieldFilled(fieldValue) && errors[fieldName] === undefined)
       return "correct";
     return !isFieldFilled(fieldValue)
       ? "default"
@@ -126,7 +128,8 @@ export default function Form({ type, isConfirmed }: FormProps) {
   };
 
   const updateFieldStates = async (field: keyof FormData) => {
-    let fieldState = await isFieldCorrect(`${field}`, field);
+    const values = getValues();
+    let fieldState = await isFieldCorrect(field, values[`${field}`]);
 
     let newInputStates = {
       [`${field}State`]: fieldState,
@@ -163,6 +166,7 @@ export default function Form({ type, isConfirmed }: FormProps) {
       )}
       {type === "register" && isConfirmed && (
         <div className="form">
+          {/* CHANGE WHEN ENDPOINT FOR EMAIL ONLY WILL BE DONE */}
           <Input
             type="email"
             state={state.inputStates.emailState}
@@ -214,9 +218,53 @@ export default function Form({ type, isConfirmed }: FormProps) {
             registerType={register("password")}
             handleBlur={() => updateFieldStates("password")}
           />
-          <Link to="/">
+          <Link to="/forgot_password">
             <p className="forgot__password__link">Forgor password?</p>
           </Link>
+          <Button
+            text="Next"
+            isValid={isValid}
+            onClick={handleSubmit(submitData)}
+          />
+        </div>
+      )}
+      {type === "forgot password" && !isConfirmed && (
+        <div className="form">
+          <p className="forgot_password">Forgot password?</p>
+          <Input
+            type="email"
+            state={state.inputStates.emailState}
+            placeholder="Your email"
+            registerType={register("email")}
+            handleBlur={() => updateFieldStates("email")}
+          />
+          <Button
+            text="Next"
+            isValid={isValid}
+            onClick={handleSubmit(submitData)}
+          />
+          <ModalWrapper
+            isModalVisible={state.isModalVisible}
+            onBackdropClick={toggleModal}
+          />
+        </div>
+      )}
+      {type === "forgot password" && isConfirmed && (
+        <div className="form">
+          <Input
+            type="password"
+            state={state.inputStates.passwordState}
+            placeholder="New password"
+            registerType={register("password")}
+            handleBlur={() => updateFieldStates("password")}
+          />
+          <Input
+            type="password"
+            state={state.inputStates.repeatPasswordState}
+            placeholder="Retry new password"
+            registerType={register("repeatPassword")}
+            handleBlur={() => updateFieldStates("repeatPassword")}
+          />
           <Button
             text="Next"
             isValid={isValid}
