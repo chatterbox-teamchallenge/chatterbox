@@ -7,6 +7,7 @@ import Button from "../Button/Button";
 import ModalWrapper from "../Modal/ModalWrapper";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { registerUser, loginUser } from "../../requests/userRequests";
 
 interface FormProps {
   type: string;
@@ -77,38 +78,10 @@ export default function Form({ type, isConfirmed }: FormProps) {
 
   const isFieldFilled = (fieldName: string | undefined) => !!fieldName;
 
-  const registerUser = (data: FormData) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_SIGNUP}`,
-        { email: data.email, username: data.name, password: data.password }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
-  const loginUser = (data: FormData) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_LOGIN}`,
-        { login: data.name, password: data.password }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
-  const submitData = (data: FormData) => {
+  const submitData = async (data: FormData) => {
     // SEND DATA TO THE SERVER
-    if (type === "register") registerUser(data);
-    else if (type === "login") loginUser(data);
+    if (type === "register") await registerUser(data);
+    else if (type === "login") await loginUser(data);
   };
 
   const isFieldCorrect = async (
