@@ -7,7 +7,10 @@ import Button from "../Button/Button";
 import ModalWrapper from "../Modal/ModalWrapper";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { registerUser, loginUser } from "../../requests/userRequests";
+import { registerUser, loginUser, statusCheck } from "../../requests/userRequests";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { updateUser } from "../../redux/reducers/userSlice";
 
 interface FormProps {
   type: string;
@@ -27,6 +30,8 @@ type FormData = {
 };
 
 export default function Form({ type, isConfirmed }: FormProps) {
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const updateState = (newState: Partial<IState>): void =>
     setState((prevState) => ({ ...prevState, ...newState }));
   const [state, setState] = useState<IState>({
@@ -80,8 +85,16 @@ export default function Form({ type, isConfirmed }: FormProps) {
 
   const submitData = async (data: FormData) => {
     // SEND DATA TO THE SERVER
-    if (type === "register") await registerUser(data);
+    // if (type === "register") await registerUser(data);
+    if (type === "register") {
+      const res = await statusCheck();
+      const data = res?.data;
+      dispatch(updateUser({data}))
+
+    }
     else if (type === "login") await loginUser(data);
+
+    console.log(user)
   };
 
   const isFieldCorrect = async (

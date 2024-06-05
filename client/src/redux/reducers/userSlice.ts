@@ -7,6 +7,7 @@ export interface UserState {
   avatar?: string | null;
   contacts?: any[];
   email?: string;
+  data?: string;
 }
 
 const initialState: UserState = {
@@ -15,7 +16,8 @@ const initialState: UserState = {
   token: '',
   avatar: null,
   contacts: [],
-  email: ''
+  email: '',
+  data: '',
 };
 
 const userSlice = createSlice({

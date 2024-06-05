@@ -21,3 +21,13 @@ export const loginUser = async (data: any) => {
       console.error(error);
     });
 };
+
+export const statusCheck = async () => {
+    try {
+        const res = await axios.get(`http://localhost:5000/`)
+          return res;
+    }
+    catch (error) {
+        console.error(error)
+    }
+};
