@@ -7,6 +7,10 @@ import Button from "../Button/Button";
 import ModalWrapper from "../Modal/ModalWrapper";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { registerUser, loginUser, statusCheck } from "../../requests/userRequests";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { updateUser } from "../../redux/reducers/userSlice";
 
 interface FormProps {
   type: string;
@@ -26,6 +30,8 @@ type FormData = {
 };
 
 export default function Form({ type, isConfirmed }: FormProps) {
+  const dispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user);
   const updateState = (newState: Partial<IState>): void =>
     setState((prevState) => ({ ...prevState, ...newState }));
   const [state, setState] = useState<IState>({
@@ -77,38 +83,18 @@ export default function Form({ type, isConfirmed }: FormProps) {
 
   const isFieldFilled = (fieldName: string | undefined) => !!fieldName;
 
-  const registerUser = (data: FormData) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_SIGNUP}`,
-        { email: data.email, username: data.name, password: data.password }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
-  const loginUser = (data: FormData) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_LOGIN}`,
-        { login: data.name, password: data.password }
-      )
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-
-  const submitData = (data: FormData) => {
+  const submitData = async (data: FormData) => {
     // SEND DATA TO THE SERVER
-    if (type === "register") registerUser(data);
-    else if (type === "login") loginUser(data);
+    // if (type === "register") await registerUser(data);
+    if (type === "register") {
+      const res = await statusCheck();
+      const data = res?.data;
+      dispatch(updateUser({data}))
+
+    }
+    else if (type === "login") await loginUser(data);
+
+    console.log(user)
   };
 
   const isFieldCorrect = async (
