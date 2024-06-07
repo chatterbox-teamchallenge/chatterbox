@@ -4,6 +4,8 @@ export class User implements Prisma.UserCreateInput {
     email: string | null;
     password: string | null;
     name: string | null;
+    confirmed: boolean = false;
+    confirmationToken: string;
     isBlocked?: boolean = false;
     conversation?: Prisma.ConversationCreateNestedOneWithoutParticipantsInput;
     message?: Prisma.MessageCreateNestedManyWithoutSenderInput;
