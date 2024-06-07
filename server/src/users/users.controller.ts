@@ -1,13 +1,16 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { UserService } from './users.service';
 import { User as UserModel, Prisma } from '@prisma/client';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { UserDto } from './dto/userDto';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post('/signup')
-  async createUser(@Body() userData: Prisma.UserCreateInput): Promise<UserModel> {
-    return this.userService.createUser(userData);
+  @UseGuards(JwtAuthGuard)
+  @Get('/all')
+  async getAll() {
+    return this.userService.getAllUsers();
   }
 }
