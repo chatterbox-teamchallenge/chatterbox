@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ConfirmEmailDto, UserDto } from 'src/users/dto/userDto';
+import { ConfirmEmailDto, LoginResponseDto, UserDto } from 'src/users/dto/userDto';
 import { UserService } from 'src/users/users.service';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -15,7 +15,7 @@ export class AuthService {
         private prisma: PrismaService
     ) { }
 
-    async login(userDto: UserDto) {
+    async login(userDto: UserDto): Promise<LoginResponseDto> {
         const user = await this.validateUser(userDto);
         return this.generateToken(user);
     }
