@@ -5,7 +5,7 @@ export class User implements Prisma.UserCreateInput {
     @ApiProperty({ example: 'email@domain.tld', description: 'Unique and exists' })
     email: string | null;
     @ApiProperty({ example: 'p@s$w0rd', description: 'Secure string of characters' })
-    password: string | null;
+    password?: string | null;
     @ApiProperty({ example: 'word_word_word', description: 'Unique, generates by system' })
     name: string | null;
     @ApiProperty({ example: 'true', description: 'Boolean, false by default' })

@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Get, Query } from '@nestjs/common';
-import {  LoginResponseDto, UserDto } from 'src/users/dto/userDto';
+import {  FinalizeSignupDto, LoginResponseDto, UserDto } from 'src/users/dto/userDto';
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
@@ -16,17 +16,17 @@ export class AuthController {
         return this.authService.login(userDto);
     }
 
-    @ApiOperation({ summary: 'Signup', description: 'Username is optional' })
+    @ApiOperation({ summary: 'Signup', description: '' })
     @ApiResponse({ status: 200, description: 'JWT Token', type: LoginResponseDto })
     @Post('/signup')
     signup(@Body() userDto: UserDto) {
         return this.authService.signup(userDto);
     }
 
-    @ApiOperation({ summary: 'Confirm email' })
+    @ApiOperation({ summary: 'Finalize confirmation and signup', description: 'Username is optional' })
     @ApiResponse({ status: 200 })
-    @Get('/confirm')
-    async confirmEmail(@Query('token') token: string) {
-        return this.authService.confirmEmail({ token });
+    @Post('/finalize-signup')
+    async finalizeSignup(@Body() finalizeSignupDto: FinalizeSignupDto) {
+        return this.authService.finalizeSignup(finalizeSignupDto);
     }
 }

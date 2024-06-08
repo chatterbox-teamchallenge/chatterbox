@@ -3,7 +3,6 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { Prisma, User } from '@prisma/client';
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import * as nodemailer from 'nodemailer';
-import { ConfirmEmailDto } from './dto/userDto';
 
 @Injectable()
 export class UserService {
@@ -47,12 +46,12 @@ export class UserService {
                 pass: process.env.PASS
             }
         })
-    
+
         const mailOptions = {
             from: 'confirm chatterbox',
             to: email,
             subject: 'Confirm your email for Chatterbox',
-            text: `Please confirm your email for Chatterbox account activation by following ${process.env.API_INSTANCE}${process.env.API_CONFIRM_ENDPOINT}=${token}`
+            text: `Please confirm your email by following this link: ${process.env.FRONTEND_URL}=${token}`
         }
 
         await transporter.sendMail(mailOptions);
