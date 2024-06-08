@@ -52,7 +52,7 @@ export class UserService {
             from: 'confirm chatterbox',
             to: email,
             subject: 'Confirm your email for Chatterbox',
-            text: `Please confirm your email for Chatterbox account activation by following http://localhost:5000/api/auth/confirm?token=${token}`
+            text: `Please confirm your email for Chatterbox account activation by following ${process.env.API_INSTANCE}${process.env.API_CONFIRM_ENDPOINT}=${token}`
         }
 
         await transporter.sendMail(mailOptions);
