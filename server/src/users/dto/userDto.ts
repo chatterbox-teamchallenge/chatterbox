@@ -1,4 +1,4 @@
-import { IsString } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class UserDto {
@@ -7,16 +7,26 @@ export class UserDto {
     @ApiProperty({ example: 'word_word_word', description: 'Unique, generates by system' })
     name?: string;
     @ApiProperty({ example: 'p@s$w0rd', description: 'Secure string of characters' })
-    readonly password: string;
-}
-
-export class ConfirmEmailDto {
-    @IsString()
-    @ApiProperty({ example: 'dfvfdgbddfw4t54hr', description: 'String, used to confirm email' })
-    token: string;
+    password?: string;
 }
 
 export class LoginResponseDto {
     @ApiProperty({ example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' })
     token: string;
+}
+
+export class FinalizeSignupDto {
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({ example: 'dfvfdgbddfw4t54hr', description: 'String, used to confirm email' })
+    token: string;
+
+    @IsString()
+    @ApiProperty({ example: 'word_word_word', description: 'Unique username' })
+    name?: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @ApiProperty({ example: 'p@s$w0rd', description: 'Secure string of characters' })
+    password: string;
 }

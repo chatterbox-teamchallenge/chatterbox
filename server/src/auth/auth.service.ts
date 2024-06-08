@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ConfirmEmailDto, LoginResponseDto, UserDto } from 'src/users/dto/userDto';
+import { FinalizeSignupDto, LoginResponseDto, UserDto } from 'src/users/dto/userDto';
 import { UserService } from 'src/users/users.service';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -28,17 +28,16 @@ export class AuthService {
             throw new HttpException('User with this email already exists', HttpStatus.BAD_REQUEST);
         }
 
-        const hash = await bcrypt.hash(userDto.password, 10);
         const user = await this.userService.createUser({
             ...userDto,
-            password: hash,
             confirmationToken: confirmationEmailToken,
             confirmed: false,
         });
 
-        await this.userService.sendConfirmationEmail(userDto.email, confirmationEmailToken)
-        return this.generateToken(user);
+        await this.userService.sendConfirmationEmail(userDto.email, confirmationEmailToken);
+        return { message: 'Confirmation email sent' };
     }
+
 
     private async generateToken(user: User) {
         const payload = { email: user.email, id: user.id, }
@@ -70,23 +69,27 @@ export class AuthService {
         return user;
     }
 
-    async confirmEmail(confirmEmailDto: ConfirmEmailDto) {
+    async finalizeSignup(finalizeSignupDto: FinalizeSignupDto) {
         const user = await this.prisma.user.findFirst({
-            where: { confirmationToken: confirmEmailDto.token }
+            where: { confirmationToken: finalizeSignupDto.token }
         });
 
         if (!user) {
-            throw new HttpException('Not allowed to confirm. Invalid confirmation token', HttpStatus.BAD_REQUEST)
+            throw new HttpException('Invalid confirmation token', HttpStatus.BAD_REQUEST);
         }
+
+        const hash = await bcrypt.hash(finalizeSignupDto.password, 10);
 
         await this.prisma.user.update({
             where: { id: user.id },
             data: {
+                name: finalizeSignupDto.name,
+                password: hash,
                 confirmed: true,
                 confirmationToken: null
             }
-        })
+        });
 
-        return {message: 'Email confirmed successfully'}
+        return { message: 'Signup completed successfully' };
     }
 }
