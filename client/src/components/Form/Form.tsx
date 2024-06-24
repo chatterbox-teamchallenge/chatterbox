@@ -11,8 +11,7 @@ import {
   registerUser,
   setEmail,
 } from "../../requests/userRequests";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { useDispatch } from "react-redux";
 import { updateUser } from "../../redux/reducers/userSlice";
 import Checkbox from "../Checkbox/Checkbox";
 
