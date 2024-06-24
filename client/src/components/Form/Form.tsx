@@ -96,6 +96,7 @@ export default function Form({ type, isConfirmed }: FormProps) {
       const user = res?.data;
       toggleModal();
       dispatch(updateUser(user));
+      localStorage.setItem('token', user.token)
     } else if (type === "register" && isConfirmed) {
       const token = new URLSearchParams(location.search).get("token");
       const res = await registerUser(token as string, data);
@@ -103,7 +104,6 @@ export default function Form({ type, isConfirmed }: FormProps) {
       dispatch(updateUser(user));
       navigate("/login");
     } else if (type === "login") {
-      console.log(state.inputStates.password);
       await loginUser(data);
     }
   };

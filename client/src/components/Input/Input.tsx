@@ -1,8 +1,5 @@
 import { useState } from "react";
-import password from "../../icons/password.png";
-import passwordHidden from "../../icons/password_hidden.png";
-import correct from "../../icons/correct.png";
-import alert from "../../icons/alert.png";
+import { icons } from "../../constants/icons";
 
 interface InputProps {
   placeholder?: string;
@@ -32,7 +29,7 @@ export default function Input({
         return type === "password" && isPasswordShown ? (
           <img
             className="password__icon"
-            src={password}
+            src={icons.password}
             alt="password"
             onClick={showPassword}
             onMouseDown={(e) => e.preventDefault()}
@@ -40,7 +37,7 @@ export default function Input({
         ) : type === "password" && !isPasswordShown ? (
           <img
             className="password__icon"
-            src={passwordHidden}
+            src={icons.passwordHidden}
             alt="password"
             onClick={showPassword}
             onMouseDown={(e) => e.preventDefault()}
@@ -48,13 +45,13 @@ export default function Input({
         ) : null;
       }
       case "correct": {
-        return <img className="correct__icon" src={correct} alt="correct" />;
+        return <img className="correct__icon" src={icons.correct} alt="correct" />;
       }
       default: {
         return (
           <img
             className="alert__icon"
-            src={alert}
+            src={icons.alert}
             alt="wrong value"
             onMouseOver={() => setIsAlertShown(true)}
             onMouseOut={() => setIsAlertShown(false)}

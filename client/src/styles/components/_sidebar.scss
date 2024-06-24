@@ -1,0 +1,54 @@
+.sidebar {
+    &__container {
+        background-color: var(--main-dark);
+        padding: 40px 0;
+        height: 100vh;
+        width: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .avatar {
+        width: 44px;
+        height: 44px;
+    }
+    
+    .navbar__container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+    }
+    
+    .navbar {
+        cursor: pointer;
+
+        &:not(:first-of-type) {
+            margin-top: 40px;
+        }
+
+        &:first-of-type {
+            margin-top: 66px;
+        }
+    }
+    
+    .logout {
+        cursor: pointer;
+        &:hover{
+            filter: saturate(13) hue-rotate(-60deg);
+        }
+    }
+
+    .navbar {
+        &:not(:first-of-type):hover, &:not(:first-of-type).checked {
+            filter: saturate(13) hue-rotate(-60deg);
+        }
+
+        &:first-of-type:not(.checked) {
+            filter: sepia(1) saturate(.5) hue-rotate(-30deg);
+        }
+    }
+}
+

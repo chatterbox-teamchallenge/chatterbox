@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Start from "../pages/Start/Start";
 import Login from "../pages/Start/Login";
+import Chat from "../pages/Chat/Chat";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/forgot_password",
     element: <Login type="forgot password"/>,
+  },
+  {
+    path: "/chat",
+    element: <Chat/>,
   },
 ]);
 
