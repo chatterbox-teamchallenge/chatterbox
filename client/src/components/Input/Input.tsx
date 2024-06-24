@@ -8,7 +8,7 @@ interface InputProps {
   placeholder?: string;
   type: string;
   state: string;
-  registerType: any;
+  registerType?: any;
   handleBlur?: any;
 }
 

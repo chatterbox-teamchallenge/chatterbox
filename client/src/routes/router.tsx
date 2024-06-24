@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Start from "../pages/Start/Start";
 import Login from "../pages/Start/Login";
-// import Login from "../pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -10,7 +9,11 @@ const router = createBrowserRouter([
   },
   {
     path: "register",
-    element: <Login type="register"/>,
+    element: <Login type="register" isConfirmed={false}/>,
+  },
+  {
+    path: "confirm",
+    element: <Login type="register" isConfirmed={true}/>,
   },
   {
     path: "login",
