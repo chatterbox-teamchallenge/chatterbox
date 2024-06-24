@@ -10,7 +10,6 @@ import {
   loginUser,
   registerUser,
   setEmail,
-  statusCheck,
 } from "../../requests/userRequests";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -39,7 +38,6 @@ export default function Form({ type, isConfirmed }: FormProps) {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user);
   const updateState = (newState: Partial<IState>): void =>
     setState((prevState) => ({ ...prevState, ...newState }));
   const [state, setState] = useState<IState>({
