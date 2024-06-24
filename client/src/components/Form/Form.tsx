@@ -5,12 +5,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import Button from "../Button/Button";
 import ModalWrapper from "../Modal/ModalWrapper";
-import { Link } from "react-router-dom";
-// import axios from "axios";
-import {  loginUser, statusCheck } from "../../requests/userRequests";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  loginUser,
+  registerUser,
+  setEmail,
+  statusCheck,
+} from "../../requests/userRequests";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { updateUser } from "../../redux/reducers/userSlice";
+import Checkbox from "../Checkbox/Checkbox";
 
 interface FormProps {
   type: string;
@@ -20,6 +25,7 @@ interface FormProps {
 interface IState {
   inputStates: any;
   isModalVisible: boolean;
+  isChecked: boolean;
 }
 
 type FormData = {
@@ -31,6 +37,8 @@ type FormData = {
 
 export default function Form({ type, isConfirmed }: FormProps) {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
   const updateState = (newState: Partial<IState>): void =>
     setState((prevState) => ({ ...prevState, ...newState }));
@@ -42,6 +50,7 @@ export default function Form({ type, isConfirmed }: FormProps) {
       repeatPasswordState: "default",
     },
     isModalVisible: false,
+    isChecked: false,
   });
 
   const formSchema: ZodType<FormData> = z
@@ -68,7 +77,7 @@ export default function Form({ type, isConfirmed }: FormProps) {
       {
         message: "Passwords do not match",
         path: ["repeatPassword"],
-      }
+      },
     );
 
   const {
@@ -85,26 +94,29 @@ export default function Form({ type, isConfirmed }: FormProps) {
 
   const submitData = async (data: FormData) => {
     // SEND DATA TO THE SERVER
-    // if (type === "register") await registerUser(data);
-    if (type === "register") {
-      const res = await statusCheck();
-      const data = res?.data;
-      dispatch(updateUser({data}))
-
+    if (type === "register" && !isConfirmed) {
+      const res = await setEmail(data);
+      const user = res?.data;
+      toggleModal();
+      dispatch(updateUser(user));
+    } else if (type === "register" && isConfirmed) {
+      const token = new URLSearchParams(location.search).get("token");
+      const res = await registerUser(token as string, data);
+      const user = res?.data;
+      dispatch(updateUser(user));
+      navigate("/login");
+    } else if (type === "login") {
+      console.log(state.inputStates.password);
+      await loginUser(data);
     }
-    else if (type === "login") await loginUser(data);
-
-    console.log(user)
   };
 
   const isFieldCorrect = async (
     fieldName: keyof FormData,
-    fieldValue: string | undefined
+    fieldValue: string | undefined,
   ) => {
     await trigger(fieldName);
-    console.log(fieldName, fieldValue, isFieldFilled(fieldValue));
     if (fieldName === "name" && !isFieldFilled(fieldValue)) {
-      console.log(fieldName);
       return "correct";
     } else if (isFieldFilled(fieldValue) && errors[fieldName] === undefined)
       return "correct";
@@ -121,16 +133,16 @@ export default function Form({ type, isConfirmed }: FormProps) {
       [`${field}State`]: fieldState,
     };
 
-    // if (field === "name") {
-    //   newInputStates = { [`${field}State`]: "default" };
-    // }
-
     updateState({ inputStates: { ...state.inputStates, ...newInputStates } });
   };
 
   const toggleModal = () => {
     updateState({ isModalVisible: !state.isModalVisible });
   };
+
+  function handleCheck() {
+    updateState({ isChecked: !state.isChecked });
+  }
 
   return (
     <form className="form__wrapper" onSubmit={handleSubmit(submitData)}>
@@ -143,7 +155,11 @@ export default function Form({ type, isConfirmed }: FormProps) {
             registerType={register("email")}
             handleBlur={() => updateFieldStates("email")}
           />
-          <Button text={"Next"} isValid={isValid} onClick={toggleModal} />
+          <Button
+            text={"Next"}
+            isValid={isValid}
+            onClick={handleSubmit(submitData)}
+          />
           <ModalWrapper
             isModalVisible={state.isModalVisible}
             onBackdropClick={toggleModal}
@@ -153,13 +169,6 @@ export default function Form({ type, isConfirmed }: FormProps) {
       {type === "register" && isConfirmed && (
         <div className="form">
           {/* CHANGE WHEN ENDPOINT FOR EMAIL ONLY WILL BE DONE */}
-          <Input
-            type="email"
-            state={state.inputStates.emailState}
-            placeholder="Your email"
-            registerType={register("email")}
-            handleBlur={() => updateFieldStates("email")}
-          />
           <Input
             type="name"
             state={state.inputStates.nameState}
@@ -181,9 +190,14 @@ export default function Form({ type, isConfirmed }: FormProps) {
             registerType={register("repeatPassword")}
             handleBlur={() => updateFieldStates("repeatPassword")}
           />
+          <Checkbox
+            text="I have read the terms and conditions"
+            checked={state.isChecked}
+            handleClick={handleCheck}
+          />
           <Button
             text={"Next"}
-            isValid={isValid}
+            isValid={isValid && state.isChecked}
             onClick={handleSubmit(submitData)}
           />
         </div>
@@ -194,7 +208,6 @@ export default function Form({ type, isConfirmed }: FormProps) {
             type="name"
             state={state.inputStates.nameState}
             placeholder="Your email or name"
-            registerType={register("name")}
             handleBlur={() => updateFieldStates("name")}
           />
           <Input
