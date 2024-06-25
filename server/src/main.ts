@@ -8,7 +8,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000',
-      'https://chatterbox-chattingmore.netlify.app'
+      'https://chatterbox-chattingmore.netlify.app',
     ],
     methods: "*",
     credentials: true,
