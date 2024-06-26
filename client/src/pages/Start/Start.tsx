@@ -1,8 +1,7 @@
-import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../img/logo.svg'
-import google from '../../icons/google.png'
 import Button from '../../components/Button/Button'
+import { icons } from '../../constants/icons';
 const Start = () => {
   const navigate = useNavigate();
   
@@ -17,7 +16,7 @@ const Start = () => {
           <Button text='With email' onClick={() => {}} />
         </div>
         <div className='btn__container'>
-          <img src={google} alt="google"  className='btn__icon'/>
+          <img src={icons.google} alt="google"  className='btn__icon'/>
           <Button text='With Google'  onClick={()=>{}} />
         </div>
         
@@ -27,6 +26,7 @@ const Start = () => {
         <p className='start__text'>Don't have an account?</p>
         <Link to="register">Register</Link>
         {/* <a href="!#" className='start__link'>Register</a> */}
+        
       </div>
     </div>
   )
