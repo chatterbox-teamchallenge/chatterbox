@@ -30,3 +30,12 @@ text-align: center;
 
 
 }
+
+
+.btn-icon{
+
+    cursor: pointer;
+        & .emoji:hover, .add:hover, .send:hover, .microphone:hover{
+            filter: brightness(.2) hue-rotate(30deg);
+        }
+}
