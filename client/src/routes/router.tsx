@@ -25,7 +25,7 @@ const router = createBrowserRouter([
     element: <Login type="forgot password"/>,
   },
   {
-    path: "/chat",
+    path: "chat",
     element: <Chat/>,
   },
 ]);

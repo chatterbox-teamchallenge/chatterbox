@@ -16,7 +16,7 @@ export const registerUser = async (token: string, data: any) => {
   const newUser = await axios
     .post(
       `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_FINALIZE_SIGNUP}`,
-      {token: token, name: data.name, password: data.password },
+      { token: token, name: data.name, password: data.password },
     )
     .catch((error) => {
       console.error(error);
@@ -25,14 +25,16 @@ export const registerUser = async (token: string, data: any) => {
 };
 
 export const loginUser = async (data: any) => {
-  await axios
+  console.log(data)
+  const user = await axios
     .post(
       `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_LOGIN}`,
-      { login: data.name, password: data.password },
+      { email: data.name, password: data.password },
     )
     .catch((error) => {
       console.error(error);
     });
+  return user;
 };
 
 export const statusCheck = async () => {

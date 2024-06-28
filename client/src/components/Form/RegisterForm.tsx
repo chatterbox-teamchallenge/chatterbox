@@ -5,9 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import Button from "../Button/Button";
 import ModalWrapper from "../Modal/ModalWrapper";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
-  loginUser,
   registerUser,
   setEmail,
 } from "../../requests/userRequests";
@@ -33,7 +32,7 @@ type FormData = {
   repeatPassword?: string;
 };
 
-export default function Form({ type, isConfirmed }: FormProps) {
+export default function RegisterForm({ type, isConfirmed }: FormProps) {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -103,8 +102,6 @@ export default function Form({ type, isConfirmed }: FormProps) {
       const user = res?.data;
       dispatch(updateUser(user));
       navigate("/login");
-    } else if (type === "login") {
-      await loginUser(data);
     }
   };
 
@@ -195,31 +192,6 @@ export default function Form({ type, isConfirmed }: FormProps) {
           <Button
             text={"Next"}
             isValid={isValid && state.isChecked}
-            onClick={handleSubmit(submitData)}
-          />
-        </div>
-      )}
-      {type === "login" && (
-        <div className="form">
-          <Input
-            type="name"
-            state={state.inputStates.nameState}
-            placeholder="Your email or name"
-            handleBlur={() => updateFieldStates("name")}
-          />
-          <Input
-            type="password"
-            state={state.inputStates.passwordState}
-            placeholder="Password"
-            registerType={register("password")}
-            handleBlur={() => updateFieldStates("password")}
-          />
-          <Link to="/forgot_password">
-            <p className="forgot__password__link">Forgor password?</p>
-          </Link>
-          <Button
-            text="Next"
-            isValid={isValid}
             onClick={handleSubmit(submitData)}
           />
         </div>
