@@ -1,0 +1,40 @@
+.person{
+    display: flex;
+    align-items: center;
+}
+
+.person__img-box{
+    position: relative;
+    width: 60px;
+    height: 56px;
+    
+}
+
+.person__img{
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+}
+
+.person__online{
+    position: absolute;
+    bottom: -2px;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    background-color: var(--green);
+    border-radius: 100%;
+}
+
+.person__name{
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--modal);
+}
+
+.person__status{
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--secondary);
+}
+
