@@ -1,0 +1,54 @@
+.dialoginput{
+    margin: auto auto 12px;
+// margin-top: auto;
+    display: flex;
+    gap: 12px;
+    // margin-bottom: 12px;
+    // margin-left: auto;
+    // margin-right: auto;
+}
+
+.dialoginput__container{
+    width: 1090px;
+    display: flex;
+
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: var(--cream);
+}
+
+.dialoginput__textarea{
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 10px;
+    border-radius: 20px;
+    margin-right: 12px;
+    font-size: 14px;
+padding: 8px;
+width: 624px;
+height: 35px;
+background: var(--modal);
+}
+
+.dialoginput__btns{
+    
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dialoginput__btn{
+    width: 70px;
+height: 60px;
+display: flex;
+justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: var(--cream);
+}

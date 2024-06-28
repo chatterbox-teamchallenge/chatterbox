@@ -9,6 +9,13 @@ import dialog from '../icons/dialog.png'
 import settings from '../icons/settings.png'
 import folder from '../icons/folder.png'
 import logout from '../icons/logout.png'
+import phone from '../icons/phone.png'
+import camera from '../icons/camera.png'
+import dots from '../icons/dots.png'
+import emoji from '../icons/emoji.png'
+import add from '../icons/add.png'
+import send from '../icons/send.png'
+import microphone from '../icons/microphone.png'
 
 export const icons = {
     alert: alert,
@@ -22,4 +29,11 @@ export const icons = {
     settings: settings,
     folder: folder,
     logout: logout,
+    phone: phone,
+    camera: camera,
+    dots: dots,
+    emoji: emoji,
+    add: add,
+    send: send,
+    microphone:microphone
 }
