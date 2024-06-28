@@ -6,7 +6,7 @@ import { useState } from "react";
 import Button from "../Button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../requests/userRequests";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../../redux/reducers/userSlice";
 import { REGEX } from "../../constants/regex";
 
@@ -57,13 +57,16 @@ export default function LoginForm() {
 
   const submitData = async (data: FormData) => {
     try {
-        const res = await loginUser(data);
-        const user = res?.data;
-        dispatch(updateUser(user));
-        navigate("/chat");
-    }
-    catch (error) {
-        navigate("/login")
+      const res = await loginUser(data);
+      if (res?.status !== 201) {
+        throw new Error("Login failed");
+      }
+      const user = res?.data;
+      dispatch(updateUser(user));
+      localStorage.setItem('token', res?.data.token)
+      navigate("/chat");
+    } catch (error) {
+      navigate("/login");
     }
   };
 
