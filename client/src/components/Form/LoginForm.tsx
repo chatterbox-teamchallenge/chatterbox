@@ -21,7 +21,6 @@ type FormData = {
 
 export default function LoginForm() {
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
   const updateState = (newState: Partial<IState>): void =>
     setState((prevState) => ({ ...prevState, ...newState }));
