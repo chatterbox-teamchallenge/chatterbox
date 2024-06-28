@@ -6,7 +6,7 @@ import { useState } from "react";
 import Button from "../Button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../../requests/userRequests";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser } from "../../redux/reducers/userSlice";
 import { REGEX } from "../../constants/regex";
 
