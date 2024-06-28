@@ -1,4 +1,5 @@
 import axios from "axios";
+import { REGEX } from "../constants/regex";
 
 export const setEmail = async (data: any) => {
   const newUser = await axios
@@ -25,11 +26,21 @@ export const registerUser = async (token: string, data: any) => {
 };
 
 export const loginUser = async (data: any) => {
-  console.log(data)
+  if (data.name && REGEX.email.test(data.name)) {
+    const user = await axios
+      .post(
+        `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_LOGIN}`,
+        { email: data.name, password: data.password },
+      )
+      .catch((error) => {
+        console.error(error);
+      });
+    return user;
+  }
   const user = await axios
     .post(
       `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_LOGIN}`,
-      { email: data.name, password: data.password },
+      { name: data.name, password: data.password },
     )
     .catch((error) => {
       console.error(error);
