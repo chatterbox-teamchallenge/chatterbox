@@ -1,8 +1,8 @@
 import React from "react";
-import emoji from "../../img/chat/dialog/emoji.svg";
-import add from "../../img/chat/dialog/add.svg";
-import sent from "../../img/chat/dialog/sent.svg";
-import microph from "../../img/chat/dialog/microph.svg";
+// import emoji from "../../img/chat/dialog/emoji.svg";
+// import add from "../../img/chat/dialog/add.svg";
+// import sent from "../../img/chat/dialog/sent.svg";
+// import microph from "../../img/chat/dialog/microph.svg";
 import { icons } from "../../constants/icons";
 import ButtonIcon from "../Button/ButtonIcon";
 

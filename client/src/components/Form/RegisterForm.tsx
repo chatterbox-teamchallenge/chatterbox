@@ -5,9 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import Button from "../Button/Button";
 import ModalWrapper from "../Modal/ModalWrapper";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
-  loginUser,
   registerUser,
   setEmail,
 } from "../../requests/userRequests";
