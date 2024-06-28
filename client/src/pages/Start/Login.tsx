@@ -1,4 +1,5 @@
-import Form from "../../components/Form/Form";
+import LoginForm from "../../components/Form/LoginForm";
+import RegisterForm from "../../components/Form/RegisterForm";
 import logo from "../../img/logo.svg";
 
 interface LoginProps {
@@ -10,9 +11,9 @@ const Login = ({type, isConfirmed}: LoginProps) => {
   return (
     <div className="register container">
       <img className="register__logo" src={logo} alt="logo" />
-      {type === 'register' && <Form type={type} isConfirmed={isConfirmed} />  }
-      {type === 'login' && <Form type={type}/>}
-      {type === 'forgot password' && <Form type={type} isConfirmed={false}/>}
+      {type === 'register' && <RegisterForm type={type} isConfirmed={isConfirmed} />  }
+      {type === 'login' && <LoginForm />}
+      {type === 'forgot password' && <RegisterForm type={type} isConfirmed={false}/>}
     </div>
   );
 };
