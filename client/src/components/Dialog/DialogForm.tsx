@@ -1,20 +1,30 @@
-import React from "react";
-// import emoji from "../../img/chat/dialog/emoji.svg";
-// import add from "../../img/chat/dialog/add.svg";
-// import sent from "../../img/chat/dialog/sent.svg";
-// import microph from "../../img/chat/dialog/microph.svg";
+import React, { useState } from "react";
 import { icons } from "../../constants/icons";
 import ButtonIcon from "../Button/ButtonIcon";
 
 const DialogForm = () => {
+  const [textareaValue, setTextareaValue] = useState("")
+
+  const handleInputChange = (e:any) => {
+    setTextareaValue(e.target.value)
+
+    e.target.style.height = 'auto'
+    e.target.style.height = `${e.target.scrollHeight}px`
+  }
+
   return (
     <div className="dialoginput">
       <div className="dialoginput__container">
-        <textarea placeholder="Message" className="dialoginput__textarea" />
+        <textarea
+          placeholder="Message"
+          className="dialoginput__textarea"
+          value={textareaValue}
+          onChange={handleInputChange}
+        />
         <div className="dialoginput__btns">
-          <ButtonIcon src={icons.emoji} icon={'emoji'} />
-          <ButtonIcon src={icons.add} icon={'add'} />
-          <ButtonIcon src={icons.send} icon={'send'} />
+          <ButtonIcon src={icons.emoji} icon={'icon-emoji'} />
+          <ButtonIcon src={icons.add} icon={'icon-add'} />
+          <ButtonIcon src={icons.send} icon={'icon-send'} />
         </div>
       </div>
       <div className="dialoginput__btn">

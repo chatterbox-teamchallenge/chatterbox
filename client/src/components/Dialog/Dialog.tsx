@@ -6,6 +6,7 @@ import kate from '../../img/chat/dialog/kate.jpg'
 import Date from './Date'
 import DialogForm from './DialogForm'
 import { icons } from "../../constants/icons";
+import DialogWindow from './DialogWindow'
 
 
 const Dialog = () => {
@@ -50,6 +51,7 @@ const Dialog = () => {
       </div>
 
       <Date text={'Wed 9 May'} />
+      <DialogWindow/>
       <DialogForm/>
     </div>
   )

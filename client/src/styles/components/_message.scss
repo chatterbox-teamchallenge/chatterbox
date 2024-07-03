@@ -1,0 +1,44 @@
+.usermsg{
+    max-width: 437px;
+    margin-left: auto;
+    display: inline-block;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: var(--main-dark);
+    color: var(--light-grey);
+    box-shadow: var(--box-shadow);
+
+}
+
+.usermsg__downbox, .frndmsg__downbox{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.usermsg__text{
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.usermsg__time, .frndmsg__time{
+    font-weight: 400;
+font-size: 12px;
+text-transform: uppercase;
+color: var(--secondary);
+}
+
+
+.frndmsg{
+    max-width: 437px;
+    margin-right: auto;
+    display: inline-block;
+    padding: 8px;
+    border-radius: 8px;
+    background-color: var(--light-grey);
+    color: var(--main-dark);
+    box-shadow: var(--box-shadow);
+
+}
+

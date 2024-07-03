@@ -20,4 +20,65 @@
 
 }
 
+.dialoginput{
+    margin: 12px auto;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
 
+.dialoginput__container{
+    width: 1090px;
+    display: flex;
+
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: var(--cream);
+}
+
+.dialoginput__textarea{
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 10px;
+    border-radius: 20px;
+    margin-right: 12px;
+    font-size: 14px;
+padding: 8px;
+width: 624px;
+height: 35px;
+min-height: 35px;
+            max-height: 300px;
+            overflow-y: auto;
+background: var(--modal);
+}
+
+.dialoginput__btns{
+    
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.dialoginput__btn{
+    width: 70px;
+height: 60px;
+display: flex;
+justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: var(--cream);
+}
+
+
+.dialogwind{
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
