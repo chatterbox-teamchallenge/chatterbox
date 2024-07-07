@@ -56,4 +56,16 @@ export class UserService {
 
         await transporter.sendMail(mailOptions);
     }
+
+    async deleteUserByEmail(email: string): Promise<any> {
+        const user = await this.prisma.user.findUnique({ where: { email } });
+        
+        if (!user) {
+            throw new HttpException('User with this email not found', HttpStatus.NOT_FOUND);
+        }
+    
+        await this.prisma.user.delete({ where: { email } });
+    
+        return { message: `User with email ${email} was deleted successfully` };
+    }
 }
