@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Get, UseGuards, Delete } from '@nestjs/common';
 import { UserService } from './users.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -15,5 +15,10 @@ export class UserController {
   @Get('/all')
   async getAll() {
     return this.userService.getAllUsers();
+  }
+
+  @Delete('/delete')
+  async deleteUserByEmail(@Body('email') email: any) {
+    return this.userService.deleteUserByEmail(email);
   }
 }
