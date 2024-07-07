@@ -2,6 +2,7 @@ import { Body, Controller, Post, Get, Query } from '@nestjs/common';
 import {  FinalizeSignupDto, LoginResponseDto, UserDto } from 'src/users/dto/userDto';
 import { AuthService } from './auth.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { User } from '@prisma/client';
 
 @ApiTags('Authorization')
 @Controller('auth')

@@ -13,6 +13,7 @@ export class UserDto {
 export class LoginResponseDto {
     @ApiProperty({ example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...' })
     token: string;
+    user: any;
 }
 
 export class FinalizeSignupDto {

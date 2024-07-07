@@ -17,7 +17,9 @@ export class AuthService {
 
     async login(userDto: UserDto): Promise<LoginResponseDto> {
         const user = await this.validateUser(userDto);
-        return this.generateToken(user);
+        const token = await this.generateToken(user);
+
+        return { user, token }
     }
 
     async signup(userDto: UserDto) {
@@ -39,11 +41,9 @@ export class AuthService {
     }
 
 
-    private async generateToken(user: User) {
+    private async generateToken(user: User): Promise<string> {
         const payload = { email: user.email, id: user.id, }
-        return {
-            token: this.jwtService.sign(payload)
-        }
+        return this.jwtService.sign(payload)
     }
 
     private async validateUser(userDto: UserDto) {
@@ -90,6 +90,8 @@ export class AuthService {
             }
         });
 
-        return { message: 'Signup completed successfully' };
+        const token = await this.generateToken(user);
+
+        return { user, token }
     }
 }
