@@ -17,6 +17,8 @@ export class UserController {
     return this.userService.getAllUsers();
   }
 
+  @ApiOperation({ summary: 'Delete user by email' })
+  @ApiResponse({ status: 200 })
   @Delete('/delete')
   async deleteUserByEmail(@Body('email') email: any) {
     return this.userService.deleteUserByEmail(email);
