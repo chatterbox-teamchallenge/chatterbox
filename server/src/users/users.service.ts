@@ -3,6 +3,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { Prisma, User } from '@prisma/client';
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import * as nodemailer from 'nodemailer';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -33,7 +34,7 @@ export class UserService {
     }
 
     async getUserByEmail(email: string): Promise<User> {
-        const user = await this.prisma.user.findUnique({ where: { email } });
+        const user = await this.prisma.user.findFirst({ where: { email } });
         this.logger.log(`Found user with email ${email}`);
         return user;
     }
@@ -77,5 +78,48 @@ export class UserService {
 
         this.logger.log(`User with email ${email} was deleted successfully`);
         return { message: `User with email ${email} was deleted successfully` };
+    }
+
+    async sendForgotPasswordEmail(email: string, token: string) {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 587,
+            secure: false,
+            auth: {
+                user: process.env.USER,
+                pass: process.env.PASS
+            }
+        })
+
+        const mailOptions = {
+            from: 'forgot password chatterbox',
+            to: email,
+            subject: 'Forgot Password Link from Chatterbox',
+            text: `Please update your password by following this link: ${process.env.FRONTEND_FORGOT_PW_URL}=${token}`
+        }
+
+        await transporter.sendMail(mailOptions)
+    }
+
+    async updatePassword(newPassword: string, forgotPasswordToken: string) {
+        const user = await this.prisma.user.findFirst({
+            where: { confirmationToken: forgotPasswordToken }
+        });
+
+        if (!user) {
+            this.logger.log('User not found on updatePassword, seems missmatch with forgotPasswordToken:', forgotPasswordToken)
+            throw new HttpException('User not found on updatePassword, seems missmatch with forgotPasswordToken', HttpStatus.NOT_FOUND)
+        }
+
+        const hash = await bcrypt.hash(newPassword, 10);
+
+        await this.prisma.user.update({
+            where: { id: user.id },
+            data: { password: hash }
+        })
+
+        this.logger.log(`Password has been updated successfully for: ${user.email}`)
+        return { message: 'Password has been updated successfully' }
     }
 }

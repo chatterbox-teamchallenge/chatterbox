@@ -34,15 +34,41 @@ export class AuthService {
             throw new HttpException('User with this email already exists', HttpStatus.BAD_REQUEST);
         }
 
-        const user = await this.userService.createUser({
+        /* const user = */
+
+        await this.userService.createUser({
             ...userDto,
             confirmationToken: confirmationEmailToken,
             confirmed: false,
         });
 
-        this.logger.log(`Confirmation email sent to ${userDto.email}`);
         await this.userService.sendConfirmationEmail(userDto.email, confirmationEmailToken);
+        this.logger.log(`Confirmation email sent to ${userDto.email}`);
         return { message: 'Confirmation email sent' };
+    }
+
+    async forgotPassword(email: string, oldPassword: string) {
+        const user = await this.userService.getUserByEmail(email)
+        const forgotPasswordToken = uuidv4();
+        this.logger.log(`User ${email} hits /forgot-password`);
+
+        if (!user) {
+            this.logger.log(`User with this email doesn't exist: ${email}`);
+            throw new HttpException('User with this email doesn\'t exist', HttpStatus.NOT_FOUND);
+        }
+
+        const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
+
+        if (!isPasswordMatch) {
+            this.logger.log(`Incorrect password for ${email} on attempt to get forgotPassword`);
+            throw new HttpException('Incorrect password', HttpStatus.BAD_REQUEST);
+        }
+
+        await this.prisma.user.update({ where: { id: user.id }, data: { confirmationToken: forgotPasswordToken } })
+
+        await this.userService.sendForgotPasswordEmail(email, forgotPasswordToken);
+        this.logger.log(`Forgot password email sent to ${email}`);
+        return { message: 'Forgot password email sent' };
     }
 
 
