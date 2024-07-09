@@ -41,10 +41,6 @@ export class AuthController {
                     type: 'string',
                     example: 'example@email.com',
                 },
-                oldPassword: {
-                    type: 'string',
-                    example: 'oldpassword',
-                },
             },
         },
     })
