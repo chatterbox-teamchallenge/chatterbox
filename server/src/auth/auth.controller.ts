@@ -49,7 +49,7 @@ export class AuthController {
         },
     })
     @Post('/forgot-password')
-    async forgotPassword(@Body() body: { email: string, oldPassword: string }) {
-        return this.authService.forgotPassword(body.email, body.oldPassword)
+    async forgotPassword(@Body() body: { email: string }) {
+        return this.authService.forgotPassword(body.email)
     }
 }
