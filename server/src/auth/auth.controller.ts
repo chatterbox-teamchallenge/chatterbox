@@ -41,15 +41,11 @@ export class AuthController {
                     type: 'string',
                     example: 'example@email.com',
                 },
-                oldPassword: {
-                    type: 'string',
-                    example: 'oldpassword',
-                },
             },
         },
     })
     @Post('/forgot-password')
-    async forgotPassword(@Body() body: { email: string, oldPassword: string }) {
-        return this.authService.forgotPassword(body.email, body.oldPassword)
+    async forgotPassword(@Body() body: { email: string }) {
+        return this.authService.forgotPassword(body.email)
     }
 }

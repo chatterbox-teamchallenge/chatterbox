@@ -47,7 +47,7 @@ export class AuthService {
         return { message: 'Confirmation email sent' };
     }
 
-    async forgotPassword(email: string, oldPassword: string) {
+    async forgotPassword(email: string) {
         const user = await this.userService.getUserByEmail(email)
         const forgotPasswordToken = uuidv4();
         this.logger.log(`User ${email} hits /forgot-password`);
@@ -55,13 +55,6 @@ export class AuthService {
         if (!user) {
             this.logger.log(`User with this email doesn't exist: ${email}`);
             throw new HttpException('User with this email doesn\'t exist', HttpStatus.NOT_FOUND);
-        }
-
-        const isPasswordMatch = await bcrypt.compare(oldPassword, user.password);
-
-        if (!isPasswordMatch) {
-            this.logger.log(`Incorrect password for ${email} on attempt to get forgotPassword`);
-            throw new HttpException('Incorrect password', HttpStatus.BAD_REQUEST);
         }
 
         await this.prisma.user.update({ where: { id: user.id }, data: { confirmationToken: forgotPasswordToken } })
