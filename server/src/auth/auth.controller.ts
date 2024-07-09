@@ -1,7 +1,7 @@
 import { Body, Controller, Post, } from '@nestjs/common';
-import {  FinalizeSignupDto, LoginResponseDto, UserDto } from 'src/users/dto/userDto';
+import { FinalizeSignupDto, LoginResponseDto, UserDto } from 'src/users/dto/userDto';
 import { AuthService } from './auth.service';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Authorization')
 @Controller('auth')
@@ -28,5 +28,28 @@ export class AuthController {
     @Post('/finalize-signup')
     async finalizeSignup(@Body() finalizeSignupDto: FinalizeSignupDto) {
         return this.authService.finalizeSignup(finalizeSignupDto);
+    }
+
+    @ApiOperation({ summary: 'Forgot password', description: 'Username is optional' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiNotFoundResponse({ description: 'User not found' })
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                email: {
+                    type: 'string',
+                    example: 'example@email.com',
+                },
+                oldPassword: {
+                    type: 'string',
+                    example: 'oldpassword',
+                },
+            },
+        },
+    })
+    @Post('/forgot-password')
+    async forgotPassword(@Body() body: { email: string, oldPassword: string }) {
+        return this.authService.forgotPassword(body.email, body.oldPassword)
     }
 }
