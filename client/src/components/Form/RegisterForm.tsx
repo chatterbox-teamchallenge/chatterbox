@@ -6,10 +6,7 @@ import { useState } from "react";
 import Button from "../Button/Button";
 import ModalWrapper from "../Modal/ModalWrapper";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  registerUser,
-  setEmail,
-} from "../../requests/userRequests";
+import { registerUser, setEmail } from "../../requests/userRequests";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../redux/reducers/userSlice";
 import Checkbox from "../Checkbox/Checkbox";
@@ -89,18 +86,23 @@ export default function RegisterForm({ type, isConfirmed }: FormProps) {
   const isFieldFilled = (fieldName: string | undefined) => !!fieldName;
 
   const submitData = async (data: FormData) => {
-    // SEND DATA TO THE SERVER
-    if (type === "register" && !isConfirmed) {
-      const res = await setEmail(data);
-      const user = res?.data;
+    if (!isConfirmed) {
+      const res = await setEmail(data, type);
       toggleModal();
-      dispatch(updateUser(user));
-      localStorage.setItem('token', user.token)
+      const user = res?.data;
+      if (type === "register") {
+        dispatch(updateUser(user));
+        localStorage.setItem("token", user.token);
+      }
     } else if (type === "register" && isConfirmed) {
       const token = new URLSearchParams(location.search).get("token");
       const res = await registerUser(token as string, data);
       const user = res?.data;
       dispatch(updateUser(user));
+      navigate("/login");
+    } else {
+      const token = new URLSearchParams(location.search).get("token");
+      await registerUser(token as string, data);
       navigate("/login");
     }
   };
