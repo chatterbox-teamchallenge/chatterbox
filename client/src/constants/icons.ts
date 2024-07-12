@@ -16,6 +16,7 @@ import emoji from '../icons/emoji.png'
 import add from '../icons/add.png'
 import send from '../icons/send.png'
 import microphone from '../icons/microphone.png'
+import search from '../icons/search.png'
 
 export const icons = {
     alert: alert,
@@ -35,5 +36,6 @@ export const icons = {
     emoji: emoji,
     add: add,
     send: send,
-    microphone:microphone
+    microphone:microphone,
+    search: search,
 }
