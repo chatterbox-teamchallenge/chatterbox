@@ -25,6 +25,10 @@ const router = createBrowserRouter([
     element: <Login type="forgot password"/>,
   },
   {
+    path: "forgot",
+    element: <Login type="forgot password" isConfirmed={true}/>,
+  },
+  {
     path: "chat",
     element: <Chat/>,
   },

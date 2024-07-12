@@ -1,10 +1,18 @@
 import axios from "axios";
 import { REGEX } from "../constants/regex";
 
-export const setEmail = async (data: any) => {
+export const setEmail = async (data: any, type: string) => {
+  let url;
+  if (type === 'forgot password') {
+    url = `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_FORGOT}`
+  }
+  else {
+    url = `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_SIGNUP}`
+  }
+
   const newUser = await axios
     .post(
-      `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_SIGNUP}`,
+      url,
       { email: data.email },
     )
     .catch((error) => {
@@ -23,6 +31,18 @@ export const registerUser = async (token: string, data: any) => {
       console.error(error);
     });
   return newUser;
+};
+
+export const updatePassword = async (token: string, data: any) => {
+  const updatedPassword = await axios
+    .put(
+      `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_FINALIZE_FORGOT}`,
+      { newPassword: data.password, forgotPasswordToken: token },
+    )
+    .catch((error) => {
+      console.error(error);
+    });
+  return updatedPassword;
 };
 
 export const loginUser = async (data: any) => {
