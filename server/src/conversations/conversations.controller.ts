@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { ConversationsService } from './conversations.service';
 import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -22,7 +22,7 @@ export class ConversationsController {
         },
     })
     @Get('list')
-    async getAll(@Query('id') id: number) {
+    async getAll(@Query('id', ParseIntPipe) id: number) {
         return this.conversationsService.getAllChatsByUser(id);
     }
 
