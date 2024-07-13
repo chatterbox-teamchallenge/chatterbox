@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { ApiBadRequestResponse, ApiBody, ApiForbiddenResponse, ApiNotFoundResponse, ApiOperation, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
@@ -78,5 +78,20 @@ export class MessagesController {
         @Body('content') content: string 
     ) {
         return this.messagesService.updateMessage(messageId, content);
+    }
+
+    @ApiOperation({ summary: 'Delete Message', description: 'Delete a message by messageId' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiNotFoundResponse({ description: 'Message not found' })
+    @ApiParam({
+        name: 'messageId',
+        type: Number,
+        description: 'The ID of the message to update',
+        example: 1,
+        required: true,
+    })
+    @Delete('delete/:messageId')
+    async deleteMessage(@Param('messageId', ParseIntPipe) messageId: number) {
+        return this.messagesService.deleteMessage(messageId);
     }
 }
