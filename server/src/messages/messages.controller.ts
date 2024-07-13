@@ -1,6 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { MessagesService } from './messages.service';
-import { ApiBadRequestResponse, ApiBody, ApiForbiddenResponse, ApiNotFoundResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiForbiddenResponse, ApiNotFoundResponse, ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Messages')
 @Controller('messages')
@@ -33,5 +33,20 @@ export class MessagesController {
     @Post('send')
     async sendMessage(@Body() body: { chatId: number, senderId: number, messageBody: string }) {
         return this.messagesService.sendMessage(body.chatId, body.senderId, body.messageBody);
+    }
+
+    @ApiOperation({ summary: 'Get Messages', description: 'Receive list of messages for chat by chatId' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiNotFoundResponse({ description: 'Conversation not found' })
+    @ApiQuery({
+        name: 'chatId',
+        type: Number,
+        description: 'The ID of the chat to get messages for',
+        example: 1,
+        required: true,
+    })
+    @Get('get')
+    async getMessages(@Query('chatId', ParseIntPipe) chatId: number) {
+        return this.messagesService.getMessagesByChat(chatId)
     }
 }
