@@ -1,0 +1,30 @@
+.search {
+  display: flex;
+}
+
+.search__img {
+  width: 48px;
+}
+
+.search__input {
+  width: 100%;
+  position: relative;
+
+  &__field {
+    display: block;
+    background-color: var(--cream);
+    border-radius: 8px;
+    height: 40px;
+    width: 100%;
+    -webkit-box-shadow: 0px -1px 7px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px -1px 7px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px -1px 7px 0px rgba(0, 0, 0, 0.2);
+  }
+
+  &__icon {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    cursor: pointer;
+  }
+}
