@@ -44,4 +44,28 @@ export class MessagesService {
 
         return message;
     }
+
+    async getMessagesByChat(chatId: number) {
+        const conversation = await this.prisma.conversation.findFirst({
+            where: { id: chatId },
+            include: { participants: true }
+        })
+
+        if (!conversation) {
+            this.logger.log(`Conversation not found ${chatId}`);
+            throw new HttpException('Conversation not found', HttpStatus.NOT_FOUND);
+        }
+
+        const messages = await this.prisma.message.findMany({
+            where: { conversationId: chatId },
+            include: {
+                sender: true
+            },
+            orderBy: {
+                createdAt: 'asc'
+            }
+        })
+
+        return messages;
+    }
 }
