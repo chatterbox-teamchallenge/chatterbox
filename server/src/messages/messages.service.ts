@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { response } from 'express';
 import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
@@ -70,16 +71,31 @@ export class MessagesService {
     }
 
     async updateMessage(messageId: number, content: string) {
-        const message = this.prisma.message.findUnique({ where: { id: messageId } })
+        const message = await this.prisma.message.findUnique({ where: { id: messageId } })
 
         if (!message) {
             this.logger.log(`Message not found ${messageId}`);
             throw new HttpException('Message not found', HttpStatus.NOT_FOUND);
         }
 
-        return this.prisma.message.update({
+        await this.prisma.message.update({
             where: { id: messageId },
             data: { body: content }
         })
+
+        return { response: 'Message has been updated', messageBody: content }
+    }
+
+    async deleteMessage(messageId: number) {
+        const message = await this.prisma.message.findUnique({ where: { id: messageId } })
+
+        if (!message) {
+            this.logger.log(`Message not found ${messageId}`);
+            throw new HttpException('Message not found', HttpStatus.NOT_FOUND);
+        }
+
+        await this.prisma.message.delete({ where: { id: messageId } })
+
+        return { response: 'Message has been deleted successfully' }
     }
 }
