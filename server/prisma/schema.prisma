@@ -50,6 +50,7 @@ model Conversation {
   id           Int       @id @default(autoincrement())
   participants User[]
   messages     Message[]
+  pinned       Boolean   @default(false)
   createdAt    DateTime  @default(now()) @map("created_at")
   updatedAt    DateTime  @updatedAt @map("updated_at")
 
@@ -57,15 +58,15 @@ model Conversation {
 }
 
 model Message {
-  id            Int          @id @default(autoincrement())
-  sender        User         @relation(fields: [userId], references: [id])
-  userId        Int          @map("user_id")
-  body          String       @db.VarChar(256)
-  pinned        Boolean      @default(false)
-  conversation  Conversation @relation(fields: [conversationId], references: [id])
-  conversationId Int         @map("conversation_id")
-  createdAt     DateTime     @default(now()) @map("created_at")
-  updatedAt     DateTime     @updatedAt @map("updated_at")
+  id             Int          @id @default(autoincrement())
+  sender         User         @relation(fields: [userId], references: [id])
+  userId         Int          @map("user_id")
+  body           String       @db.VarChar(256)
+  pinned         Boolean      @default(false)
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId Int          @map("conversation_id")
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
 
   @@map("messages")
 }

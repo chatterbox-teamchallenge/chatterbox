@@ -1,6 +1,6 @@
-import { Body, Controller, Get, ParseIntPipe, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ConversationsService } from './conversations.service';
-import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Chats')
 @Controller('conversations')
@@ -55,5 +55,20 @@ export class ConversationsController {
         @Body('initialMessages') initialMessages: { senderId: number; body: string }[]
     ) {
         return this.conversationsService.createNewChat(participantIds, initialMessages);
+    }
+
+    @ApiOperation({ summary: 'Pin Chat', description: 'Pin a chat by chatId' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiNotFoundResponse({ description: 'Chat not found' })
+    @ApiParam({
+        name: 'chatId',
+        type: Number,
+        description: 'The ID of the chat to pin',
+        example: 1,
+        required: true,
+    })
+    @Put('pin/:chatId')
+    async pinChat(@Param('chatId', ParseIntPipe) chatId: number) {
+        return this.conversationsService.pinChat(chatId)
     }
 }
