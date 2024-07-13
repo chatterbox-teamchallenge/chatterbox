@@ -69,4 +69,17 @@ export class ConversationsService {
 
         return { response: 'Chat was pinned succesfully' }
     }
+
+    async deleteChatById(chatId: number) {
+        const chat = await this.prisma.conversation.findUnique({ where: { id: chatId } })
+
+        if (!chat) {
+            this.logger.log(`Chat not found ${chatId}`);
+            throw new HttpException('Chat not found', HttpStatus.NOT_FOUND);
+        }
+
+        await this.prisma.conversation.delete({ where: { id: chatId } })
+
+        return { response: 'Chat was deleted succesfully' }
+    }
 }
