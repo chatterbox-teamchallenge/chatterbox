@@ -80,13 +80,28 @@ export class MessagesController {
         return this.messagesService.updateMessage(messageId, content);
     }
 
+    @ApiOperation({ summary: 'Pin Message', description: 'Pin a message by messageId' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiNotFoundResponse({ description: 'Message not found' })
+    @ApiParam({
+        name: 'messageId',
+        type: Number,
+        description: 'The ID of the message to pin',
+        example: 1,
+        required: true,
+    })
+    @Put('pin/:messageId')
+    async pinMessage(@Param('messageId', ParseIntPipe) messageId: number) {
+        return this.messagesService.pinMessage(messageId)
+    }
+
     @ApiOperation({ summary: 'Delete Message', description: 'Delete a message by messageId' })
     @ApiBadRequestResponse({ description: 'Bad Request' })
     @ApiNotFoundResponse({ description: 'Message not found' })
     @ApiParam({
         name: 'messageId',
         type: Number,
-        description: 'The ID of the message to update',
+        description: 'The ID of the message to delete',
         example: 1,
         required: true,
     })

@@ -5,6 +5,6 @@ export class AppService {
     constructor() { }
 
     async returnRoot() {
-        return 'Chat API v1.1.1'
+        return 'Chat API v1.1.2'
     }
 }
