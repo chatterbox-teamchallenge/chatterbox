@@ -17,7 +17,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Chatterbox-API')
     .setDescription('CRUD RESTful API documentation')
-    .setVersion('1.0.0')
+    .setVersion('1.1.0')
     .addTag('chatterbox-backend')
     .build();
   const document = SwaggerModule.createDocument(app, config);
