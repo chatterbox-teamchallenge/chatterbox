@@ -98,4 +98,20 @@ export class MessagesService {
 
         return { response: 'Message has been deleted successfully' }
     }
+
+    async pinMessage(messageId: number) {
+        const message = await this.prisma.message.findUnique({ where: { id: messageId } })
+
+        if (!message) {
+            this.logger.log(`Message not found ${messageId}`);
+            throw new HttpException('Message not found', HttpStatus.NOT_FOUND);
+        }
+
+        await this.prisma.message.update({
+            where: { id: messageId },
+            data: { pinned: true }
+        })
+
+        return { response: 'Message was pinned succesfully' }
+    }
 }
