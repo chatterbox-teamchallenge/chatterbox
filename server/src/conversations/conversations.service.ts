@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { response } from 'express';
 import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
@@ -51,5 +52,21 @@ export class ConversationsService {
                 messages: true
             }
         });
+    }
+
+    async pinChat(chatId: number) {
+        const chat = await this.prisma.conversation.findUnique({ where: { id: chatId } })
+
+        if (!chat) {
+            this.logger.log(`Chat not found ${chatId}`);
+            throw new HttpException('Chat not found', HttpStatus.NOT_FOUND);
+        }
+
+        await this.prisma.conversation.update({
+            where: { id: chatId },
+            data: { pinned: true }
+        })
+
+        return { response: 'Chat was pinned succesfully' }
     }
 }
