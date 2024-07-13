@@ -26,8 +26,7 @@ export class ConversationsController {
         return this.conversationsService.getAllChatsByUser(id);
     }
 
-
-    @ApiOperation({ summary: 'Create new chat', description: 'Create a chat between two user. NOTE: all the data should exist in db' })
+    @ApiOperation({ summary: 'Create new chat', description: 'Create a chat between two users. NOTE: all the data should exist in db' })
     @ApiBadRequestResponse({ description: 'Bad Request' })
     @ApiNotFoundResponse({ description: 'User with id not found' })
     @ApiBody({
