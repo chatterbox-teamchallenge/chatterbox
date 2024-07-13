@@ -7,9 +7,23 @@ import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOperation, ApiT
 export class ConversationsController {
     constructor(private conversationsService: ConversationsService) { }
 
-    @Get('all')
-    async getAll() {
-        return this.conversationsService.getAll();
+    @ApiOperation({ summary: 'Get chats for user', description: 'Get chats for user by user\'s ID' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiNotFoundResponse({ description: 'User with id not found' })
+    @ApiBody({
+        schema: {
+            type: 'object',
+            properties: {
+                id: {
+                    type: 'number',
+                    example: 1,
+                },
+            },
+        },
+    })
+    @Get('list')
+    async getAll(@Body('id') id: number) {
+        return this.conversationsService.getAllChatsByUser(id);
     }
 
 

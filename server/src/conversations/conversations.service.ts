@@ -1,12 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class ConversationsService {
+    private readonly logger = new Logger(ConversationsService.name);
+
     constructor(private prisma: PrismaService) { }
 
-    async getAll() {
+    async getAllChatsByUser(id: number) {
+        const user = await this.prisma.user.findFirst({ where: { id } })
+        if (!user) {
+            this.logger.log(`Invalid user ID: ${id}`);
+            throw new HttpException('Invalid user ID', HttpStatus.NOT_FOUND);
+        }
 
+        return this.prisma.conversation.findMany({
+            where: {
+                participants: {
+                    some: {
+                        id: user.id
+                    }
+                }
+            },
+            include: {
+                participants: true,
+                messages: {
+                    orderBy: {
+                        createdAt: 'desc'
+                    }
+                }
+            }
+        });
     }
 
     async createNewChat(participantIds: number[], initialMessages: { senderId: number; body: string }[]) {
