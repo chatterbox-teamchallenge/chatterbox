@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ConversationsService } from './conversations.service';
 import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
@@ -70,5 +70,20 @@ export class ConversationsController {
     @Put('pin/:chatId')
     async pinChat(@Param('chatId', ParseIntPipe) chatId: number) {
         return this.conversationsService.pinChat(chatId)
+    }
+
+    @ApiOperation({ summary: 'Delete Chat', description: 'Delete a chat by chatId' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiNotFoundResponse({ description: 'Chat not found' })
+    @ApiParam({
+        name: 'chatId',
+        type: Number,
+        description: 'The ID of the chat to delete',
+        example: 1,
+        required: true,
+    })
+    @Delete('delete/:chatId')
+    async deleteChat(@Param('chatId', ParseIntPipe) chatId: number) {
+        return this.conversationsService.deleteChatById(chatId)
     }
 }
