@@ -4,6 +4,7 @@ import { Prisma, User } from '@prisma/client';
 import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
 import * as nodemailer from 'nodemailer';
 import * as bcrypt from 'bcrypt';
+import { response } from 'express';
 
 @Injectable()
 export class UserService {
@@ -69,11 +70,11 @@ export class UserService {
     async deleteUserByEmail(email: string): Promise<any> {
         const user = await this.prisma.user.findUnique({ where: { email } });
         this.logger.log(`Deleting user with email ${email}`);
-        
+
         if (!user) {
             throw new HttpException('User with this email not found', HttpStatus.NOT_FOUND);
         }
-    
+
         await this.prisma.user.delete({ where: { email } });
 
         this.logger.log(`User with email ${email} was deleted successfully`);
@@ -121,5 +122,21 @@ export class UserService {
 
         this.logger.log(`Password has been updated successfully for: ${user.email}`)
         return { message: 'Password has been updated successfully' }
+    }
+
+    async setUserBio(userId: number, bio: string) {
+        const user = await this.prisma.user.findUnique({ where: { id: userId } })
+
+        if (!user) {
+            this.logger.log('User not found', userId)
+            throw new HttpException('User not found', HttpStatus.NOT_FOUND)
+        }
+
+        await this.prisma.user.update({
+            where: { id: userId },
+            data: { bio }
+        })
+
+        return { response: 'User bio was updated succesfully' }
     }
 }
