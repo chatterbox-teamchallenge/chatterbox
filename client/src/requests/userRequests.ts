@@ -2,6 +2,7 @@ import axios from "axios";
 import { REGEX } from "../constants/regex";
 
 export const setEmail = async (data: any, type: string) => {
+  // CHECK TYPE 
   let url;
   if (type === 'forgot password') {
     url = `${process.env.REACT_APP_DOMAIN}${process.env.REACT_APP_ENDPOINT_FORGOT}`
