@@ -3,7 +3,7 @@ import SearchInput from './Input/SearchInput';
 
 export default function Search() {
   return <div className="search">
-    <img src={logo} className='search__img'/>
+    <img src={logo} className='search__img' alt="icon"/>
     <SearchInput/>
   </div>;
 }
