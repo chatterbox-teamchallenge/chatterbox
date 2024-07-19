@@ -1,4 +1,6 @@
 .usermsg{
+    display: inline-block;
+    word-wrap: break-word;
     max-width: 437px;
     margin-left: auto;
     display: inline-block;
@@ -11,15 +13,17 @@
 }
 
 .usermsg__downbox, .frndmsg__downbox{
+    position: relative;
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-.usermsg__text{
+.usermsg__text, .frndmsg__text{
     font-weight: 400;
     font-size: 16px;
     margin-bottom: 4px;
+    white-space: pre-wrap;
 }
 
 .usermsg__time, .frndmsg__time{
@@ -31,6 +35,8 @@ color: var(--secondary);
 
 
 .frndmsg{
+    display: inline-block;
+    word-wrap: break-word;
     max-width: 437px;
     margin-right: auto;
     display: inline-block;

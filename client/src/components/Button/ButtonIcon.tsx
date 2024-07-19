@@ -5,14 +5,16 @@ import '../../styles/components/_button.scss'
 interface ButtonIconProps {
     src: string;
     icon: string;
+    styleName: string;
+    onClick: () => void;
 }
 
-const ButtonIcon: React.FC<ButtonIconProps> = ({src, icon}) => {
+const ButtonIcon: React.FC<ButtonIconProps> = ({src, icon, onClick, styleName}) => {
 return (
-    <div className='btn-icon' >
+    <button type='button' className={styleName}  onClick={onClick}>
         <img src={src} alt="icon"  className={`${icon}`} />
         
-    </div>
+    </button>
 )
 }
 

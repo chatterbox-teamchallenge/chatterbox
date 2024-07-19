@@ -8,12 +8,12 @@
     background: url(../../img/chat/dialog/dialogbg.png);
     background-size: contain;
     background-position: center;
-   
+    
 }
 
 .dialogue__header{
     // width: 1200px;
-     padding: 16px;
+    padding: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,8 +31,7 @@
 .dialoginput__container{
     width: 100%;
     display: flex;
-
-    align-items: center;
+    align-items:flex-end;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px;
@@ -44,12 +43,12 @@
     border: none;
     outline: none;
     resize: none;
-    padding: 10px;
+    // padding: 10px;
     border-radius: 20px;
     margin-right: 12px;
     font-size: 14px;
 padding: 8px;
-width: 624px;
+width: 1024px;
 height: 35px;
 min-height: 35px;
             max-height: 300px;
@@ -72,14 +71,37 @@ justify-content: center;
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 10px;
+    // padding: 10px;
     background-color: var(--cream);
 }
 
 
 .dialogwind{
+    height: 100vh;
     padding: 0 12px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    overflow: hidden;
+}
+
+.dialog__box{
+    display: flex;
+    flex-direction: column;
+}
+
+.messages__container{
+    padding: 12px;
+    flex: 1;
+    // max-height: 800px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    &::-webkit-scrollbar {
+        display: none; 
+    }
 }

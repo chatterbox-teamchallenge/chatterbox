@@ -3,8 +3,6 @@ import '../../styles/components/_dialog.scss'
 import '../../styles/components/_person.scss'
 
 import kate from '../../img/chat/dialog/kate.jpg'
-import Date from './Date'
-import DialogForm from './DialogForm'
 import { icons } from "../../constants/icons";
 import DialogWindow from './DialogWindow'
 
@@ -50,9 +48,9 @@ const Dialog = () => {
         </ul>
       </div>
 
-      <Date text={'Wed 9 May'} />
+      
       <DialogWindow/>
-      <DialogForm/>
+      
     </div>
   )
 }

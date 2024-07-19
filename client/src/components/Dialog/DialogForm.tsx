@@ -2,14 +2,26 @@ import React, { useState } from "react";
 import { icons } from "../../constants/icons";
 import ButtonIcon from "../Button/ButtonIcon";
 
-const DialogForm = () => {
+interface DialogFormProps {
+  addMessages: (text: string) => void;
+}
+
+
+const DialogForm:  React.FC<DialogFormProps>  = ({addMessages}) => {
   const [textareaValue, setTextareaValue] = useState("")
 
-  const handleInputChange = (e:any) => {
+  const handleInputChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextareaValue(e.target.value)
 
     e.target.style.height = 'auto'
     e.target.style.height = `${e.target.scrollHeight}px`
+  }
+
+  const handleSendMessage = () => {
+    if (textareaValue.trim()) {
+      addMessages(textareaValue)
+      setTextareaValue("")
+    }
   }
 
   return (
@@ -22,13 +34,13 @@ const DialogForm = () => {
           onChange={handleInputChange}
         />
         <div className="dialoginput__btns">
-          <ButtonIcon src={icons.emoji} icon={'icon-emoji'} />
-          <ButtonIcon src={icons.add} icon={'icon-add'} />
-          <ButtonIcon src={icons.send} icon={'icon-send'} />
+          <ButtonIcon onClick={()=> {}}  src={icons.emoji} icon={'icon-emoji'} styleName='btn-icon '/>
+          <ButtonIcon onClick={()=> {}}  src={icons.add} icon={'icon-add'} styleName='btn-icon '/>
+          <ButtonIcon onClick={handleSendMessage} src={icons.send} icon={'icon-send'} styleName='btn-icon '/>
         </div>
       </div>
       <div className="dialoginput__btn">
-        <ButtonIcon src={icons.microphone} icon={'microphone'} />
+        <ButtonIcon onClick={()=>{}} src={icons.microphone} icon={'microphone'} styleName='btn-icon '/>
       </div>
     </div>
   );
