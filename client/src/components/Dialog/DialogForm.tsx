@@ -34,13 +34,13 @@ const DialogForm:  React.FC<DialogFormProps>  = ({addMessages}) => {
           onChange={handleInputChange}
         />
         <div className="dialoginput__btns">
-          <ButtonIcon onClick={()=> {}}  src={icons.emoji} icon={'icon-emoji'} style='btn-icon '/>
-          <ButtonIcon onClick={()=> {}}  src={icons.add} icon={'icon-add'} style='btn-icon '/>
-          <ButtonIcon onClick={handleSendMessage} src={icons.send} icon={'icon-send'} style='btn-icon '/>
+          <ButtonIcon onClick={()=> {}}  src={icons.emoji} icon={'icon-emoji'} styleName='btn-icon '/>
+          <ButtonIcon onClick={()=> {}}  src={icons.add} icon={'icon-add'} styleName='btn-icon '/>
+          <ButtonIcon onClick={handleSendMessage} src={icons.send} icon={'icon-send'} styleName='btn-icon '/>
         </div>
       </div>
       <div className="dialoginput__btn">
-        <ButtonIcon onClick={()=>{}} src={icons.microphone} icon={'microphone'} style='btn-icon '/>
+        <ButtonIcon onClick={()=>{}} src={icons.microphone} icon={'microphone'} styleName='btn-icon '/>
       </div>
     </div>
   );

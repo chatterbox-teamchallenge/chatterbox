@@ -164,7 +164,7 @@ const DialogWindow  = () => {
             onClick={handleSaveEdit}
             src={icons.send}
             icon={'icon-send'}
-            style='dialoginput__btn'
+            styleName='dialoginput__btn'
           />
         </div>
       ) : (
