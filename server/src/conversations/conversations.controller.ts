@@ -1,19 +1,28 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { ConversationsService } from './conversations.service';
-import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiNotFoundResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Chats')
 @Controller('conversations')
 export class ConversationsController {
     constructor(private conversationsService: ConversationsService) { }
 
-    @Get('all')
-    async getAll() {
-        return this.conversationsService.getAll();
+    @ApiOperation({ summary: 'Get chats for user', description: 'Get chats for user by user\'s ID' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiNotFoundResponse({ description: 'User with id not found' })
+    @ApiParam({
+        name: 'userId',
+        type: Number,
+        description: 'The ID of the user to list chats',
+        example: 1,
+        required: true,
+    })
+    @Get('list/:userId')
+    async getAll(@Param('userId', ParseIntPipe) userId: number) {
+        return this.conversationsService.getAllChatsByUser(userId);
     }
 
-
-    @ApiOperation({ summary: 'Create new chat', description: 'Create a chat between two user. NOTE: all the data should exist in db' })
+    @ApiOperation({ summary: 'Create new chat', description: 'Create a chat between two users. NOTE: all the data should exist in db' })
     @ApiBadRequestResponse({ description: 'Bad Request' })
     @ApiNotFoundResponse({ description: 'User with id not found' })
     @ApiBody({
@@ -42,5 +51,35 @@ export class ConversationsController {
         @Body('initialMessages') initialMessages: { senderId: number; body: string }[]
     ) {
         return this.conversationsService.createNewChat(participantIds, initialMessages);
+    }
+
+    @ApiOperation({ summary: 'Pin Chat', description: 'Pin a chat by chatId' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiNotFoundResponse({ description: 'Chat not found' })
+    @ApiParam({
+        name: 'chatId',
+        type: Number,
+        description: 'The ID of the chat to pin',
+        example: 1,
+        required: true,
+    })
+    @Put('pin/:chatId')
+    async pinChat(@Param('chatId', ParseIntPipe) chatId: number) {
+        return this.conversationsService.pinChat(chatId)
+    }
+
+    @ApiOperation({ summary: 'Delete Chat', description: 'Delete a chat by chatId' })
+    @ApiBadRequestResponse({ description: 'Bad Request' })
+    @ApiNotFoundResponse({ description: 'Chat not found' })
+    @ApiParam({
+        name: 'chatId',
+        type: Number,
+        description: 'The ID of the chat to delete',
+        example: 1,
+        required: true,
+    })
+    @Delete('delete/:chatId')
+    async deleteChat(@Param('chatId', ParseIntPipe) chatId: number) {
+        return this.conversationsService.deleteChatById(chatId)
     }
 }

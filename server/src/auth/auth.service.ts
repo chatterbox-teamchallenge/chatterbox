@@ -34,8 +34,6 @@ export class AuthService {
             throw new HttpException('User with this email already exists', HttpStatus.BAD_REQUEST);
         }
 
-        /* const user = */
-
         await this.userService.createUser({
             ...userDto,
             confirmationToken: confirmationEmailToken,
