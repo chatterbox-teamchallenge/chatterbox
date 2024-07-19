@@ -1,6 +1,6 @@
 import React from 'react'
 import checked from '../../img/chat/dialog/checked.svg'
-
+import '../../styles/components/_message.scss'
 
 interface FriendMessageProps{
   text: string;
@@ -10,7 +10,7 @@ interface FriendMessageProps{
 
 const FriendMessage: React.FC<FriendMessageProps> = ({text, time, status}) => {
   return (
-    <div className='frndmsg'>
+    <div >
       <p className='frndmsg__text'>{text}</p>
       <div className='frndmsg__downbox'>
         <p className='frndmsg__time'>{time}</p>

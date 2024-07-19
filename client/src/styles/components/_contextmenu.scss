@@ -1,0 +1,28 @@
+.contextmenu{
+    width: 288px;
+    position: absolute;
+    background-color: var(--cream);
+    box-shadow: var(--box-shadow-contextmenu);
+    border-radius: 8px;
+    z-index: 1000;
+}
+
+.contextmenu__option{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--dark);
+    
+    &:hover, :focus{
+        background-color: var(--peach);
+    }
+}
+
+.contextmenu__icon{
+    margin-right: 12px;
+}
