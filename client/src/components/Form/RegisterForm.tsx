@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import Button from "../Button/Button";
-import ModalWrapper from "../Modal/ModalWrapper";
+import ModalWrapper from "../Modal/StartModal/ModalWrapper";
 import { useLocation, useNavigate } from "react-router-dom";
 import { registerUser, setEmail } from "../../requests/userRequests";
 import { useDispatch } from "react-redux";
