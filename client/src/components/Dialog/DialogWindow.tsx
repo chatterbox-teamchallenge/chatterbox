@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
-import FriendMessage from './FriendMessage'
-import UserMessage from './UserMessage'
+import FriendMessage from '../Messages/FriendMessage'
+import UserMessage from '../Messages/UserMessage'
 import checked from '../../img/chat/dialog/checked.svg'
 import { icons } from "../../constants/icons";
 import DialogForm from '../Dialog/DialogForm'
-import CurrentDate from './CurrentDate'
-import ContextMenu from './ContextMenu'
+import CurrentDate from '../CurrentDate/CurrentDate'
+import ContextMenu from '../ContextMenu/ContextMenu'
 import ButtonIcon from '../Button/ButtonIcon';
-
+import DialogWrapper from '../Modal/DialogModal/DialogWrapper';
 
 interface Message {
   text: string;
@@ -34,6 +34,8 @@ const DialogWindow  = () => {
   const [textareaValue, setTextareaValue] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false)
   const [editMessage, setEditMessage] = useState<{ index: number;  text: string} | null>(null)
+  const [showDeleteWindow, setShowDeleteWindow] = useState<boolean>(false)
+  const [messageToDelete, setMessageToDelete] = useState<number | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -74,9 +76,9 @@ const DialogWindow  = () => {
 
   const handleDelete = () => {
     if (contextMenu) {
-      const updatedMessages = messages.filter((_, i) => i !== contextMenu.index)
-      setMessages(updatedMessages)
-      setContextMenu(null)
+      setMessageToDelete(contextMenu.index);
+      setShowDeleteWindow(true);
+      setContextMenu(null);
     }
   }
 
@@ -93,6 +95,22 @@ const DialogWindow  = () => {
   const handleCloseContextMenu = () => {
     setContextMenu(null)
   }
+
+  const handleConfirmDelete = () => {
+    if (messageToDelete !== null) {
+      const updatedMessages = messages.filter((_, i) => i !== messageToDelete);
+      setMessages(updatedMessages);
+      setShowDeleteWindow(false);
+      setMessageToDelete(null);
+    }
+  }
+
+  const handleCloseModal = () => {
+    setShowDeleteWindow(false);
+    setMessageToDelete(null);
+  }
+
+
   const getCurrentTime = (): string => {
     const date: Date = new (window as any).Date()
     let hours: number = date.getHours()
@@ -180,9 +198,16 @@ const DialogWindow  = () => {
           onEdit={handleEdit}
           onDelete={handleDelete}
           onClose={handleCloseContextMenu}
+          
         />
       )}
-      
+
+<DialogWrapper
+  isModalVisible={showDeleteWindow}
+  onBackdropClick={handleCloseModal}
+  confirmDelete={handleConfirmDelete}
+/>
+    
     </div>
   )
 }

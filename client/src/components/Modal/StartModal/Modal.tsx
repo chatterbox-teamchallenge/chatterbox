@@ -1,6 +1,6 @@
 // import React from 'react'
-import '../../styles/components/_modal.scss'
-import Button from '../Button/Button'
+import '../../../styles/components/_modal.scss'
+import Button from '../../Button/Button'
 
 
 

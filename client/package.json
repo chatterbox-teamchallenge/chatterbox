@@ -52,6 +52,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/jquery": "^3.5.30",
-    "sass": "^1.77.2"
+    "sass": "^1.77.2",
+    "webpack-cli": "^5.1.4"
   }
 }
