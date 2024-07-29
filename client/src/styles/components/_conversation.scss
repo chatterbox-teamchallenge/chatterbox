@@ -1,0 +1,95 @@
+.conversation {
+  font-family: "Roboto";
+  display: flex;
+  justify-content: space-between;
+  background: rgb(255, 249, 234);
+  background: linear-gradient(
+    141deg,
+    rgba(255, 249, 234, 1) 0%,
+    rgba(255, 249, 234, 0) 100%
+  );
+  padding: 13px 16px;
+  -webkit-box-shadow: 0px 0px 5px 0px var(--cinderella);
+  -moz-box-shadow: 0px 0px 5px 0px var(--cinderella);
+  box-shadow: 0px 0px 5px 0px var(--cinderella);
+  position: relative;
+
+  &:not(:first-of-type) {
+    margin-top: 8px;
+  }
+
+  &:first-of-type {
+    margin-top: 16px;
+  }
+
+  .interlocutor__info__block {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .interlocutor__info__avatar {
+    position: relative;
+
+    img {
+      width: 44px;
+      height: 44px;
+    }
+
+    .status {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50px;
+    }
+
+    .online {
+      background-color: var(--green);
+    }
+
+    .offline {
+      background-color: var(--secondary);
+    }
+  }
+
+  .interlocutor__info {
+    margin-left: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .interlocutor__info__name {
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .interlocutor__info__message__state {
+    display: flex;
+  }
+
+  .interlocutor__info__message {
+    font-size: 16px;
+  }
+
+  .message__state {
+    margin-right: 4px;
+  }
+
+  .typing {
+    color: var(--button-text);
+  }
+
+  .read {
+    filter: grayscale(100%) contrast(180%);
+  }
+
+  .interlocutor__info__time {
+    color: var(--button-text);
+    font-size: 10px;
+    white-space: nowrap;
+  }
+}
