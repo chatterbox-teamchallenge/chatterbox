@@ -19,7 +19,7 @@ const Chat: React.FC<ChatProps> = ({ lastMessageInfo }) => {
     else if (lastMessageInfo.isIncoming) setMessageState({icon: incoming, class: 'message__state'})
     else if (!lastMessageInfo.isRead) setMessageState({icon: outgoing, class: 'message__state not-read'})
     else if (lastMessageInfo.isRead) setMessageState({icon: incoming, class: 'message__state read'})
-  }, [])
+  }, [lastMessageInfo])
 
   return (
     <div className="conversation">

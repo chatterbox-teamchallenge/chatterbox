@@ -2,7 +2,7 @@ import avatar from "../../img/chat/dialog/kate.jpg";
 import { LastMessage } from "../../types/types";
 import Chat from "../Chat/Chat";
 
-const ChatList: React.FC = ({}) => {
+const ChatList: React.FC = () => {
   const conversations: Array<LastMessage> = [
     {
       interlocutorName: "Kate",
